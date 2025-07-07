@@ -48,6 +48,11 @@ const SearchBar = () => {
                     onChange={(event) => {
                         setCity(event.target.value);
                     }}
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
                 >
                 </input>
                 <button
