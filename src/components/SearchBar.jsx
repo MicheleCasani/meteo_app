@@ -1,43 +1,37 @@
-import React from 'react'
-import { useState } from 'react'
-import axios from 'axios';
+import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
-const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+import { GlobalContext } from '../context/GlobalContext';
 
-
+// SearchBar: barra di ricerca per trovare una città e navigare alla pagina di dettaglio
 const SearchBar = () => {
-
+    // Ottengo la funzione fetchCityData dal context globale
+    const { fetchCityData } = useContext(GlobalContext);
+    // Stato per l'input della città
     const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
+    // Stato per eventuali errori di ricerca
     const [error, setError] = useState("");
-
+    // Hook per la navigazione tra pagine
     const navigate = useNavigate();
 
-    // Funzione per gestire la ricerca della città
-    const handleSearch = () => {
-        axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
-            .then(response => {
-                if (response.data.length > 0) {
-                    const cityData = response.data[0];
-                    setCountry(cityData.country);
-                    // Naviga alla pagina dei dettagli meteo
-                    navigate(`/dettaglio/${cityData.name}/${cityData.country}`);
-                } else {
-                    setError("Città non trovata");
-                }
-            })
-            .catch(error => {
-                console.error("Errore durante la ricerca della città:", error);
-                setError("Non è stato inserito alcun valore");
-            });
-        setCity(""); // Resetta il campo di input dopo la ricerca
-        setError(""); // Resetta l'errore se presente
-
+    // Funzione per gestire la ricerca della città, e restituisce alla pagina di dettaglio
+    // Utilizza la funzione fetchCityData dal context per ottenere i dati della città
+    const handleSearch = async () => {
+        try {
+            // Chiamata asincrona al context per ottenere i dati della città
+            const cityData = await fetchCityData(city);
+            // Naviga alla pagina di dettaglio, passando anche la regione nello stato
+            navigate(`/dettaglio/${cityData.name}/${cityData.country}`, { state: { region: cityData.state } });
+            setError("");
+        } catch (err) {
+            setError(err.message || "Errore durante la ricerca della città");
+        }
+        setCity("");
     }
 
     return (
         <>
             <div className="input-group ">
+                {/* Input per la città, con gestione invio tramite Enter */}
                 <input
                     type="text"
                     className="form-control"
@@ -53,17 +47,17 @@ const SearchBar = () => {
                             handleSearch();
                         }
                     }}
-                >
-                </input>
+                />
+                {/* Bottone per avviare la ricerca */}
                 <button
                     className="btn  btn-search"
                     type="button"
                     id="button-addon2"
-                    onClick={() => {
-                        handleSearch();
-                    }}
+                    onClick={handleSearch}
                 >Cerca</button>
             </div>
+            {/* Messaggio di errore se presente */}
+            {error && <div className="alert alert-danger mt-2">{error}</div>}
         </>
     )
 }

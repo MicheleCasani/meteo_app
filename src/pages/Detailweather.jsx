@@ -6,6 +6,7 @@ import { GlobalContext } from '../context/GlobalContext'
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
 
+// Detailweather: pagina di dettaglio con previsioni orarie per la città selezionata
 const Detailweather = () => {
     // Ottieni la funzione weatherEmoji dal GlobalContext per mostrare l'emoji meteo
     const { weatherEmoji } = useContext(GlobalContext);
@@ -49,10 +50,9 @@ const Detailweather = () => {
                     <p className='text-center'>Qui potete trovare i dettagli meteo per la vostra città.</p>
                 </div>
             </div>
-
+            {/* Select per scegliere il giorno delle previsioni */}
             <div className="row">
                 <div className="col-12">
-                    {/* Select per scegliere il giorno delle previsioni */}
                     {days.length > 0 && (
                         <div className="mb-3 d-flex justify-content-center text-light">
                             <label htmlFor="day-select" className="form-label me-2">Seleziona il giorno:</label>
@@ -79,30 +79,31 @@ const Detailweather = () => {
                             <h5 className='text-center'>{selectedDay}</h5>
                             <hr />
                             {/* Lista delle previsioni orarie per il giorno selezionato */}
-                            {weatherData &&
-                                weatherData.list
-                                    .filter(item => item.dt_txt.startsWith(selectedDay))
-                                    .map((item, idx) => (
-                                        <React.Fragment key={item.dt_txt}>
-                                            <div className="card-text d-flex justify-content-around">
-                                                {/* Orario della previsione */}
-                                                <span className='meteo-info'>Orario: {item.dt_txt.split(' ')[1]}</span>
-                                                {/* Emoji meteo e descrizione */}
-                                                <span className='meteo-info'>
-                                                    Meteo: {weatherEmoji(item.weather[0].main)} {item.weather[0].description}
-                                                </span>
-                                                {/* Altri dati meteo */}
-                                                <span className='meteo-info'>Temperatura: {item.main.temp}°C</span>
-                                                <span className='meteo-info'>Umidità: {item.main.humidity}%</span>
-                                                <span className='meteo-info'>Vento: {item.wind.speed} km/h</span>
-                                            </div>
-                                            <hr />
-                                        </React.Fragment>
-                                    ))
-                            }
+                            {weatherData && weatherData.list && weatherData.list
+                                .filter(item => item.dt_txt.split(' ')[0] === selectedDay)
+                                .map((item, idx) => (
+                                    <div key={idx} className="row align-items-center mb-2">
+                                        <div className="col-3 col-md-2 text-center">
+                                            {/* Orario */}
+                                            <span style={{ width: "60px", display: "inline-block" }}>{item.dt_txt.split(' ')[1].slice(0, 5)}</span>
+                                        </div>
+                                        <div className="col-3 col-md-2 text-center">
+                                            {/* Temperatura */}
+                                            <span style={{ width: "60px", display: "inline-block" }}>{item.main.temp}°C</span>
+                                        </div>
+                                        <div className="col-4 col-md-6 text-center">
+                                            {/* Descrizione meteo e emoji */}
+                                            <span style={{ width: "180px", display: "inline-block" }}>{item.weather[0].description.toUpperCase()}</span>
+                                            <span style={{ fontSize: "2rem" }}>{weatherEmoji(item.weather[0].main)}</span>
+                                        </div>
+                                    </div>
+                                ))}
                         </div>
                     </div>
-                    <Link to="/" className="btn btn-primary d-block mx-auto mb-3 btn-homepage">Torna alla Home</Link>
+                    {/* Link per tornare alla homepage */}
+                    <div className="text-center">
+                        <Link to="/" className="btn btn-secondary mt-3">Torna alla Home</Link>
+                    </div>
                 </div>
             </div>
         </>

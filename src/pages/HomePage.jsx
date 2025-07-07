@@ -2,9 +2,9 @@ import React from 'react'
 import CardHomepage from '../components/CardHomepage'
 import SearchBar from '../components/SearchBar'
 
+// HomePage: pagina principale con titolo, descrizione e lista delle capitali
 const HomePage = () => {
-
-    // variabile che contiene le città e i loro cldici paese
+    // Array di oggetti con città e country code
     const capital = [
         { city: "Roma", country: "it" },
         { city: "Parigi", country: "fr" },
@@ -22,7 +22,7 @@ const HomePage = () => {
 
     return (
         <>
-
+            {/* Header con titolo e descrizione */}
             <div className="row mt-3 text-light">
                 <div className="col-12">
                     <h2 className='text-center'>
@@ -33,14 +33,13 @@ const HomePage = () => {
                     </p>
                 </div>
             </div>
-
+            {/* Lista delle capitali con CardHomepage */}
             <div className="row mt-5 justify-content-center align-items-center" style={{ minHeight: "70vh" }}>
                 <p className='text-center text-light'>Ecco le principali città del mondo ed il loro meteo</p>
                 {capital.map((item, index) => (
                     <CardHomepage key={index} city={item.city} country={item.country} />
                 ))}
             </div>
-
         </>
     )
 }
