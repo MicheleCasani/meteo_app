@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
 import { useContext } from "react";
+const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 
 const CardHomepage = ({ city, country }) => {
@@ -16,7 +17,7 @@ const CardHomepage = ({ city, country }) => {
 
     // eseguo la chiamata all'endpoint delle rpevisioni del meteo
     useEffect(() => {
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=6d581dda77b851906d20546134340afa&units=metric&lang=it`)
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric&lang=it`)
             .then(res => {
                 setWeather(res.data);
             })

@@ -1,5 +1,6 @@
 import React from 'react'
 import CardHomepage from '../components/CardHomepage'
+import SearchBar from '../components/SearchBar'
 
 const HomePage = () => {
 

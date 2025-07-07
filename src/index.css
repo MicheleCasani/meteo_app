@@ -33,3 +33,8 @@ main {
 .btn-homepage {
     width: 300px;
 }
+
+.btn-search {
+    background-color: rgba(0, 21, 51, 1) !important;
+    color: white !important;
+}
