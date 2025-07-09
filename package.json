@@ -15,9 +15,11 @@
     "bootstrap": "^5.3.7",
     "dom": "^0.0.3",
     "install": "^0.13.0",
+    "leaflet": "^1.9.4",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
+    "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.6.3",
     "router": "^2.2.0"
   },

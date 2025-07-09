@@ -5,16 +5,20 @@ const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 // Crea il context globale per funzioni/metodi condivisi
 export const GlobalContext = createContext();
 
-// Funzione per ottenere l'emoji del meteo in base al main
+// Funzione per ottenere l'icona del meteo in base al main
 function weatherEmoji(main) {
-    if (main === "Clear") return "☀️";
-    if (main === "Clouds") return "☁️";
-    if (main === "Rain") return "🌧️";
-    if (main === "Snow") return "❄️";
-    if (main === "Thunderstorm") return "⛈️";
-    if (main === "Drizzle") return "🌦️";
-    if (["Mist", "Fog", "Haze"].includes(main)) return "🌫️";
-    return "🌡️";
+    const iconMap = {
+        "Clear": <img src="/animations/icons8-sun-50.png" alt="Sole" style={{ width: 30, height: 30 }} />,
+        "Clouds": <img src="/animations/icons8-clouds-50.png" alt="Nuvoloso" style={{ width: 30, height: 30 }} />,
+        "Rain": <img src="/animations/icons8-heavy-rain-50.png" alt="Pioggia" style={{ width: 30, height: 30 }} />,
+        "Snow": <img src="/animations/icons8-snow-50.png" alt="Neve" style={{ width: 30, height: 30 }} />,
+        "Thunderstorm": <img src="/animations/icons8-storm-with-heavy-rain-50.png" alt="Temporale" style={{ width: 30, height: 30 }} />,
+        "Drizzle": <img src="/animations/icons8-stormy-weather-50.png" alt="Pioggerella" style={{ width: 30, height: 30 }} />,
+        "Mist": <img src="/animations/icons8-fog-50.png" alt="Nebbia" style={{ width: 30, height: 30 }} />,
+        "Fog": <img src="/animations/icons8-fog-50.png" alt="Nebbia" style={{ width: 30, height: 30 }} />,
+        "Haze": <img src="/animations/icons8-fog-50.png" alt="Foschia" style={{ width: 30, height: 30 }} />
+    };
+    return iconMap[main] || <img src="/animations/icons8-sun-50.png" alt="Meteo" style={{ width: 30, height: 30 }} />;
 }
 
 // Funzione asincrona per fetch dati città tramite geocoding API, che restituisce nome, paese, stato, latitudine e longitudine

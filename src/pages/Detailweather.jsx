@@ -6,12 +6,10 @@ import { GlobalContext } from '../context/GlobalContext'
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'
-import gif from '/animations/icons8-wind.gif'
+import CardDetail from '../components/CardDetail'
+import Map from '../components/map'
 
 const Detailweather = () => {
-    // Ottieni la funzione weatherEmoji dal GlobalContext per mostrare l'emoji meteo
-    const { weatherEmoji } = useContext(GlobalContext);
-
     // Ottieni i parametri city e country dalla URL tramite React Router
     const { city, country } = useParams();
 
@@ -50,39 +48,44 @@ const Detailweather = () => {
         <>
             {/* Header pagina */}
             <div className="row mt-3">
-                <div className="col-12 text-light">
-                    <h2 className='text-center'>Dettagli meteo</h2>
+                <div className="col-12 d-flex position-relative">
+                    <Link to="/" className="btn btn-dark text-white btn-homepage position-absolute start-10px" style={{ width: "200px", maxHeight: "40px" }}>{"< Torna alla Home"}</Link>
+                </div>
+                <h2 className='text-center'>Dettagli meteo</h2>
+                <div className="col-12 my-3 ">
+
                     {/* Mostra la regione se disponibile */}
+                    {weatherData && weatherData.city && (
+                        <h2 className="card-title text-center">{city}</h2>
+                    )}
                     {region && <h5 className='text-center'>Regione: {region}</h5>}
-                    <p className='text-center'>Qui potete trovare i dettagli meteo per la vostra città.</p>
                 </div>
             </div>
 
-            <div className="row">
-                <div className="col-12">
-                    {/* Select per scegliere il giorno delle previsioni */}
-                    {days.length > 0 && (
-                        <div className="mb-3 d-flex justify-content-center text-light align-items-center">
-                            <label htmlFor="day-select" className="form-label me-2 mb-0">Seleziona il giorno:</label>
-                            <select
-                                id="day-select"
-                                className="form-select w-auto"
-                                value={selectedDay}
-                                onChange={e => setSelectedDay(e.target.value)}
-                            >
-                                {days.map(day => (
-                                    <option key={day} value={day}>{day}</option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
+            <div className="row <div bg-map p-4 mx-3 rounded-3">
+
+                {/* Select per scegliere il giorno delle previsioni */}
+                {days.length > 0 && (
+                    <div className="mb-3 d-flex justify-content-center align-items-center">
+                        <label htmlFor="day-select" className="form-label me-2 mb-0 text-light">Seleziona il giorno:</label>
+                        <select
+                            id="day-select"
+                            className="form-select w-auto"
+                            value={selectedDay}
+                            onChange={e => setSelectedDay(e.target.value)}
+                        >
+                            {days.map(day => (
+                                <option key={day} value={day}>{day}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+                <div className="col-8">
                     {/* Card con le previsioni dettagliate */}
                     <div className="card m-4">
                         <div className="card-body">
                             {/* Titolo con il nome della città */}
-                            {weatherData && weatherData.city && (
-                                <h2 className="card-title text-center">{city}</h2>
-                            )}
+
                             {/* Giorno selezionato */}
                             <h5 className='text-center'>{selectedDay}</h5>
                             <hr />
@@ -90,29 +93,18 @@ const Detailweather = () => {
                             {weatherData &&
                                 weatherData.list
                                     .filter(item => item.dt_txt.startsWith(selectedDay))
-                                    .map((item, idx) => (
-                                        <React.Fragment key={item.dt_txt}>
-                                            <div className="card-text d-flex justify-content-around">
-                                                {/* Orario della previsione */}
-                                                <span className='meteo-info'>Orario: {item.dt_txt.split(' ')[1]}</span>
-                                                {/* Emoji meteo e descrizione */}
-                                                <span className='meteo-info'>
-                                                    Meteo: {weatherEmoji(item.weather[0].main)} {item.weather[0].description}
-                                                </span>
-                                                {/* Altri dati meteo */}
-                                                <span className='meteo-info'>Temperatura: {item.main.temp}°C</span>
-                                                <span className='meteo-info'>Umidità: {item.main.humidity}%</span>
-                                                <span className='meteo-info'>Vento: {item.wind.speed} km/h</span>
-                                            </div>
-                                            <hr />
-                                        </React.Fragment>
+                                    .map((item) => (
+                                        <CardDetail key={item.dt_txt} item={item} />
                                     ))
                             }
                         </div>
                     </div>
-                    <Link to="/" className="btn btn-primary d-block mx-auto mb-3 btn-homepage">Torna alla Home</Link>
                 </div>
-            </div>
+                <div className="col-4">
+                    <Map city={city} country={country} lat={weatherData?.city.coord.lat} lon={weatherData?.city.coord.lon} />
+                </div>
+
+            </div >
         </>
     )
 }

@@ -6,21 +6,21 @@ import SearchBar from './SearchBar'
 const Navbar = () => {
     return (
         <>
-            <div className="row">
-                <nav className="navbar bg-primary">
-                    <div className="container-fluid ">
+            <div className="row ">
+                <nav className="navbar bg-black p-0">
+                    <div className="col-12 d-flex align-items-center bg-navbar">
                         {/* Logo e titolo */}
-                        <div className="col-10">
-                            <Link
-                                className="navbar-brand text-light mx-3 d-flex align-items-center"
-                                to={"/"}>
-                                <h1>Meteo </h1>
-                                {/* Logo del sito */}
-                                <img src="/logo per sito meteo.png" alt="Logo Meteo" className='logo-navbar' />
-                            </Link>
-                        </div>
+
+                        <Link
+                            className="navbar-brand text-light mx-5 d-flex align-items-center"
+                            to={"/"}>
+                            <h1>Meteo </h1>
+                            {/* Logo del sito */}
+                            <img src="/logo-per-sito-meteo.png" alt="Logo Meteo" className='logo-navbar' />
+                        </Link>
+
                         {/* SearchBar centrata verticalmente */}
-                        <div className="col-2 d-flex align-items-center px-3">
+                        <div className="d-flex align-items-center position-relative ms-auto mx-5">
                             <SearchBar />
                         </div>
                     </div>

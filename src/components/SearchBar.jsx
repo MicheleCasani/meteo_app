@@ -57,7 +57,11 @@ const SearchBar = () => {
                 >Cerca</button>
             </div>
             {/* Messaggio di errore se presente */}
-            {error && <div className="alert alert-danger mt-2">{error}</div>}
+            {error && (
+                <div className="alert alert-danger mt-2 position-absolute top-100 " role="alert">
+                    Città non trovata
+                </div>
+            )}
         </>
     )
 }

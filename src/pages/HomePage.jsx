@@ -23,19 +23,19 @@ const HomePage = () => {
     return (
         <>
             {/* Header con titolo e descrizione */}
-            <div className="row mt-3 text-light">
-                <div className="col-12">
-                    <h2 className='text-center'>
+            <div className="row mt-3 ">
+                <div className="col-12 p-0">
+                    <h2 className='text-center p-0'>
                         Benvenuti al sito del meteo più bello che ci sia
                     </h2>
-                    <p className='text-center'>
+                    <p className='text-center p-0'>
                         Qui potete trovare le previsioni meteo per la vostra città, con un design semplice e intuitivo.
                     </p>
                 </div>
             </div>
             {/* Lista delle capitali con CardHomepage */}
             <div className="row mt-5 justify-content-center align-items-center" style={{ minHeight: "70vh" }}>
-                <p className='text-center text-light'>Ecco le principali città del mondo ed il loro meteo</p>
+                <p className='text-center p-0'>Ecco le principali città del mondo ed il loro meteo</p>
                 {capital.map((item, index) => (
                     <CardHomepage key={index} city={item.city} country={item.country} />
                 ))}

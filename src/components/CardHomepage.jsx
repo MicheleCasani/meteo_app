@@ -30,7 +30,7 @@ const CardHomepage = ({ city, country }) => {
     return (
         <>
             {/* Colonna responsive Bootstrap */}
-            <div className="col-12 col-md-6 col-lg-4 d-flex justify-content-center my-2">
+            <div className="col-12 col-md-6 col-lg-4 d-flex justify-content-center my-2 p-0">
                 {/* Card Bootstrap con effetto hover */}
                 <div className="card card-hover" style={{ width: "32rem" }}>
                     <div className="card-body">
@@ -42,7 +42,7 @@ const CardHomepage = ({ city, country }) => {
                         </p>
                         {/* Descrizione meteo e emoji */}
                         <p>
-                            {weather ? weather.weather[0].description.toUpperCase() : "Caricamento..."}
+                            {weather ? weather.weather[0].description.toUpperCase() : "Caricamento..."}&nbsp;
                             {/* Emoji meteo in base al valore di main */}
                             {weather && (
                                 <span style={{ fontSize: "2rem" }}>
@@ -52,7 +52,7 @@ const CardHomepage = ({ city, country }) => {
                         </p>
                         {/* Link alla pagina di dettaglio della città */}
                         <Link to={`/dettaglio/${city}/${country}`}
-                            className="btn btn-primary"
+                            className="btn btn-dark text-light"
                         >Dettagli aggiuntivi sul meteo</Link>
                     </div>
                 </div>
