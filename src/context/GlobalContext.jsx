@@ -1,11 +1,6 @@
 import React, { createContext } from 'react';
 import axios from 'axios';
 const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-import { useEffect, useState } from 'react';
-
-//importo le animazioni meteo
-
-
 
 // Crea il context globale per funzioni/metodi condivisi
 export const GlobalContext = createContext();
@@ -38,48 +33,10 @@ async function fetchCityData(city) {
     }
 }
 
-// Componente che mostra l'animazione Lottie in base al meteo
-// Usa fetch per caricare il file JSON dalla cartella public/animations
-function WeatherLottie({ main, style = { width: 80, height: 80 } }) {
-    // Stato per l'animazione caricata
-    const [animationData, setAnimationData] = useState(null);
-
-    // Mapping tra condizione meteo e nome file
-    const animationMap = {
-        "Clear": "sun.json",
-        "Clouds": "clouds.json",
-        "Rain": "rain.json",
-        "Snow": "snow.json",
-        "Thunderstorm": "thunderstorm.json",
-        "Drizzle": "drizzle.json",
-        "Mist": "mist.json",
-        "Fog": "mist.json",
-        "Haze": "mist.json"
-    };
-
-    // Determina il file da caricare
-    const fileName = animationMap[main] || "default.json";
-
-    useEffect(() => {
-        // Carica il file JSON dalla cartella public/animations
-        fetch(`/animations/${fileName}`)
-            .then(res => res.json())
-            .then(data => setAnimationData(data))
-            .catch(() => setAnimationData(null));
-    }, [fileName]);
-
-    // Mostra l'animazione se caricata, altrimenti un placeholder
-    return animationData ? (
-        <Lottie animationData={animationData} style={style} />
-    ) : (
-        <span style={{ fontSize: 40 }}>🌡️</span>
-    );
-}
-
 // Provider che espone le funzioni globali tramite context
 export const GlobalProvider = ({ children }) => {
     return (
-        <GlobalContext.Provider value={{ weatherEmoji, fetchCityData, WeatherLottie }}>
+        <GlobalContext.Provider value={{ weatherEmoji, fetchCityData, }}>
             {children}
         </GlobalContext.Provider>
     );
