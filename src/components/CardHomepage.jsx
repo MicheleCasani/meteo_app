@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
 const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
+
 // CardHomepage: mostra il meteo attuale di una città in una card della homepage
 const CardHomepage = ({ city, country }) => {
     // Ottengo la funzione per le emoji meteo dal context globale
